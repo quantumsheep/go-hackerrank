@@ -11,7 +11,7 @@ func main() {
 
 	candidates, err := hackerrank.Paginate(func(offset int) ([]hackerrank.TestCandidateIndex, error) {
 		res, err := api.V3GetTestByTestIdCandidates(&hackerrank.V3GetTestByTestIdCandidatesParams{
-			TestId: "1706056",
+			TestId: "<YOUR TEST ID>",
 			Limit:  100,
 			Offset: offset,
 		})
