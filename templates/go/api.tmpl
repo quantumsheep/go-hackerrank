@@ -1,0 +1,112 @@
+package hackerrank
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"net/url"
+	"strings"
+)
+
+{{- range $definitionName, $definition := $.Definitions }}
+type {{ $definitionName }} struct {
+{{- range $propertyName, $property := $definition.Properties }}
+	{{ $propertyName | ToPascal }} {{ template "property-type" $property }} `json:"{{ $propertyName }}"`
+{{- end }}
+}
+{{- end }}
+
+{{- range $path, $methods := $.Paths }}
+{{- range $httpMethod, $method := $methods }}
+{{- if eq $httpMethod "options" }}{{- continue }}{{- end }}
+
+{{- $funcName := $.GetPathFuncNameSnakeCase $path $httpMethod | ToPascal }}
+
+
+{{- range $param := $method.Parameters }}
+{{- if not (eq $param.In "body") }}{{- continue }}{{- end }}
+type {{ $funcName }}ParamsBody {{ template "param-type" $param }}
+{{- end }}
+
+type {{ $funcName }}Params struct {
+{{- range $param := $method.Parameters }}
+{{- if not (eq $param.In "path") }}{{- continue }}{{- end }}
+	{{ $param.Name | ToPascal }} {{ template "param-type" $param }}
+{{- end }}
+{{- range $param := $method.Parameters }}
+{{- if or (eq $param.In "path") (eq $param.In "body") }}{{- continue }}{{- end }}
+	{{ $param.Name | ToPascal }} {{ template "param-type" $param }} `json:"{{ $param.Name }}"`
+{{- end }}
+
+{{- range $param := $method.Parameters }}
+{{- if not (eq $param.In "body") }}{{- continue }}{{- end }}
+	{{ $funcName }}ParamsBody
+{{- end }}
+}
+
+{{- if and $method.Responses $method.Responses.Response200 $method.Responses.Response200.Schema }}
+type {{ $funcName }}Response {{ template "param-type" $method.Responses.Response200 }}
+{{- else }}
+type {{ $funcName }}Response struct{}
+{{- end }}
+
+func (c *Client) {{ $funcName }}(params *{{ $funcName }}Params) (*{{ $funcName }}Response, error) {
+	u, err := url.Parse("https://www.hackerrank.com{{ $path }}")
+	if err != nil {
+		return nil, err
+	}
+
+	{{- range $slug := $.GetPathSlugs $path }}
+	u.Path = strings.Replace(u.Path, "{{ "{" }}{{ $slug }}{{ "}" }}" , fmt.Sprintf("%v", params.{{ $slug | ToPascal }}), -1)
+	{{- end }}
+
+	q := make(url.Values)
+	{{- range $param := $method.Parameters }}
+	{{- if and (eq $param.In "path") (not ($.GetPathSlugs $path | Contains $param.Name) ) }}
+	q.Set("{{ $param.Name }}", fmt.Sprintf("%v", params.{{ $param.Name | ToPascal }}))
+	{{- end }}
+	{{- end }}
+
+	u.RawQuery = q.Encode()
+
+	{{- if or (eq $httpMethod "post") (eq $httpMethod "put") (eq $httpMethod "patch") }}
+	requestBody, err := json.Marshal(params)
+	if err != nil {
+		return nil, err
+	}
+	buffer := bytes.NewBuffer(requestBody)
+	{{- else }}
+	buffer := bytes.NewBuffer([]byte{})
+	{{- end }}
+
+	req, err := http.NewRequest("{{ $httpMethod | ToUpper }}", u.String(), buffer)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.apiKey))
+	req.Header.Set("Content-Type", "application/json")
+
+	res, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response {{ $funcName }}Response
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		return nil, err
+	}
+
+	return &response, nil
+}
+{{- end }}
+{{- end }}

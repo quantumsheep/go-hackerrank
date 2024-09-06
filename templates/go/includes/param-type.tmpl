@@ -1,0 +1,34 @@
+{{- define "param-type" -}}
+{{- if .Schema -}}
+{{- if .Schema.Ref -}}
+{{ .Schema.Ref | TrimRef }}
+{{- else -}}
+struct {
+{{- range $propertyName, $property := .Schema.Properties }}
+    {{ $propertyName | ToPascal }} {{ template "property-type" $property }} `json:"{{ $propertyName }}"`
+{{- end -}}
+}
+{{- end -}}
+{{- else if eq .TrueType "array" -}}
+
+{{- if .Items -}}
+[]{{ template "param-type" .Items }}
+{{- else -}}
+[]interface{}
+{{- end -}}
+
+{{- else if .Ref -}}
+{{ .Ref | TrimRef }}
+
+{{- else -}}
+
+{{- if eq .TrueType "integer" -}}
+int
+{{- else if eq .TrueType "" -}}
+string
+{{- else -}}
+{{ .TrueType }}
+{{- end -}}
+
+{{- end -}}
+{{- end -}}
