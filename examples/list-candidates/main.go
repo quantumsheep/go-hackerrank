@@ -2,12 +2,17 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/quantumsheep/go-hackerrank"
 )
 
+var (
+	hackerRankApiKey = os.Getenv("HACKERRANK_API_KEY")
+)
+
 func main() {
-	api := hackerrank.NewClient("<YOUR API KEY>")
+	api := hackerrank.NewClient(hackerRankApiKey)
 
 	candidates, err := hackerrank.Paginate(func(offset int) ([]hackerrank.TestCandidateIndex, error) {
 		res, err := api.V3GetTestByTestIdCandidates(&hackerrank.V3GetTestByTestIdCandidatesParams{
