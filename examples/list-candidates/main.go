@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -15,7 +16,7 @@ func main() {
 	api := hackerrank.NewClient(hackerRankApiKey)
 
 	candidates, err := hackerrank.Paginate(func(offset int) ([]hackerrank.TestCandidateIndex, error) {
-		res, err := api.V3GetTestByTestIdCandidates(&hackerrank.V3GetTestByTestIdCandidatesParams{
+		res, err := api.V3GetTestByTestIdCandidates(context.Background(), &hackerrank.V3GetTestByTestIdCandidatesParams{
 			TestId: "<YOUR TEST ID>",
 			Limit:  100,
 			Offset: offset,

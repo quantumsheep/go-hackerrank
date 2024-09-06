@@ -2,6 +2,7 @@ package hackerrank
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -52,7 +53,7 @@ type {{ $funcName }}Response {{ template "param-type" $method.Responses.Response
 type {{ $funcName }}Response struct{}
 {{- end }}
 
-func (c *Client) {{ $funcName }}(params *{{ $funcName }}Params) (*{{ $funcName }}Response, error) {
+func (c *Client) {{ $funcName }}(ctx context.Context, params *{{ $funcName }}Params) (*{{ $funcName }}Response, error) {
 	u, err := url.Parse("https://www.hackerrank.com{{ $path }}")
 	if err != nil {
 		return nil, err
@@ -81,7 +82,7 @@ func (c *Client) {{ $funcName }}(params *{{ $funcName }}Params) (*{{ $funcName }
 	buffer := bytes.NewBuffer([]byte{})
 	{{- end }}
 
-	req, err := http.NewRequest("{{ $httpMethod | ToUpper }}", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "{{ $httpMethod | ToUpper }}", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}

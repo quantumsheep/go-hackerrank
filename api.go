@@ -2,6 +2,7 @@ package hackerrank
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -1103,7 +1104,7 @@ type CreateGroupsParams struct {
 }
 type CreateGroupsResponse SCIMTeamShow
 
-func (c *Client) CreateGroups(params *CreateGroupsParams) (*CreateGroupsResponse, error) {
+func (c *Client) CreateGroups(ctx context.Context, params *CreateGroupsParams) (*CreateGroupsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Groups")
 	if err != nil {
 		return nil, err
@@ -1118,7 +1119,7 @@ func (c *Client) CreateGroups(params *CreateGroupsParams) (*CreateGroupsResponse
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1151,7 +1152,7 @@ type DeleteGroupByIdParams struct {
 }
 type DeleteGroupByIdResponse struct{}
 
-func (c *Client) DeleteGroupById(params *DeleteGroupByIdParams) (*DeleteGroupByIdResponse, error) {
+func (c *Client) DeleteGroupById(ctx context.Context, params *DeleteGroupByIdParams) (*DeleteGroupByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Groups/{id}")
 	if err != nil {
 		return nil, err
@@ -1163,7 +1164,7 @@ func (c *Client) DeleteGroupById(params *DeleteGroupByIdParams) (*DeleteGroupByI
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1196,7 +1197,7 @@ type GetGroupByIdParams struct {
 }
 type GetGroupByIdResponse SCIMTeamShow
 
-func (c *Client) GetGroupById(params *GetGroupByIdParams) (*GetGroupByIdResponse, error) {
+func (c *Client) GetGroupById(ctx context.Context, params *GetGroupByIdParams) (*GetGroupByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Groups/{id}")
 	if err != nil {
 		return nil, err
@@ -1208,7 +1209,7 @@ func (c *Client) GetGroupById(params *GetGroupByIdParams) (*GetGroupByIdResponse
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1247,7 +1248,7 @@ type UpdateGroupByIdResponse struct {
 	Schemas []interface{} `json:"schemas"`
 }
 
-func (c *Client) UpdateGroupById(params *UpdateGroupByIdParams) (*UpdateGroupByIdResponse, error) {
+func (c *Client) UpdateGroupById(ctx context.Context, params *UpdateGroupByIdParams) (*UpdateGroupByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Groups/{id}")
 	if err != nil {
 		return nil, err
@@ -1263,7 +1264,7 @@ func (c *Client) UpdateGroupById(params *UpdateGroupByIdParams) (*UpdateGroupByI
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PATCH", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PATCH", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1303,7 +1304,7 @@ type GetGroupsResponse struct {
 	TotalResults float32              `json:"totalResults"`
 }
 
-func (c *Client) GetGroups(params *GetGroupsParams) (*GetGroupsResponse, error) {
+func (c *Client) GetGroups(ctx context.Context, params *GetGroupsParams) (*GetGroupsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Groups?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -1316,7 +1317,7 @@ func (c *Client) GetGroups(params *GetGroupsParams) (*GetGroupsResponse, error) 
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1351,7 +1352,7 @@ type CreateUsersParams struct {
 }
 type CreateUsersResponse struct{}
 
-func (c *Client) CreateUsers(params *CreateUsersParams) (*CreateUsersResponse, error) {
+func (c *Client) CreateUsers(ctx context.Context, params *CreateUsersParams) (*CreateUsersResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Users")
 	if err != nil {
 		return nil, err
@@ -1366,7 +1367,7 @@ func (c *Client) CreateUsers(params *CreateUsersParams) (*CreateUsersResponse, e
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1399,7 +1400,7 @@ type DeleteUserByIdParams struct {
 }
 type DeleteUserByIdResponse struct{}
 
-func (c *Client) DeleteUserById(params *DeleteUserByIdParams) (*DeleteUserByIdResponse, error) {
+func (c *Client) DeleteUserById(ctx context.Context, params *DeleteUserByIdParams) (*DeleteUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Users/{id}")
 	if err != nil {
 		return nil, err
@@ -1411,7 +1412,7 @@ func (c *Client) DeleteUserById(params *DeleteUserByIdParams) (*DeleteUserByIdRe
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1444,7 +1445,7 @@ type GetUserByIdParams struct {
 }
 type GetUserByIdResponse SCIMUserShow
 
-func (c *Client) GetUserById(params *GetUserByIdParams) (*GetUserByIdResponse, error) {
+func (c *Client) GetUserById(ctx context.Context, params *GetUserByIdParams) (*GetUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Users/{id}")
 	if err != nil {
 		return nil, err
@@ -1456,7 +1457,7 @@ func (c *Client) GetUserById(params *GetUserByIdParams) (*GetUserByIdResponse, e
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1495,7 +1496,7 @@ type UpdateUserByIdResponse struct {
 	Schemas []interface{} `json:"schemas"`
 }
 
-func (c *Client) UpdateUserById(params *UpdateUserByIdParams) (*UpdateUserByIdResponse, error) {
+func (c *Client) UpdateUserById(ctx context.Context, params *UpdateUserByIdParams) (*UpdateUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Users/{id}")
 	if err != nil {
 		return nil, err
@@ -1511,7 +1512,7 @@ func (c *Client) UpdateUserById(params *UpdateUserByIdParams) (*UpdateUserByIdRe
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PATCH", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PATCH", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1547,7 +1548,7 @@ type PutUserByIdParams struct {
 }
 type PutUserByIdResponse SCIMUserShow
 
-func (c *Client) PutUserById(params *PutUserByIdParams) (*PutUserByIdResponse, error) {
+func (c *Client) PutUserById(ctx context.Context, params *PutUserByIdParams) (*PutUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Users/{id}")
 	if err != nil {
 		return nil, err
@@ -1563,7 +1564,7 @@ func (c *Client) PutUserById(params *PutUserByIdParams) (*PutUserByIdResponse, e
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1603,7 +1604,7 @@ type GetUsersResponse struct {
 	TotalResults float32              `json:"totalResults"`
 }
 
-func (c *Client) GetUsers(params *GetUsersParams) (*GetUsersResponse, error) {
+func (c *Client) GetUsers(ctx context.Context, params *GetUsersParams) (*GetUsersResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/Users?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -1616,7 +1617,7 @@ func (c *Client) GetUsers(params *GetUsersParams) (*GetUsersResponse, error) {
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1651,7 +1652,7 @@ type V3CreateAtsCodepairParams struct {
 }
 type V3CreateAtsCodepairResponse InterviewShow
 
-func (c *Client) V3CreateAtsCodepair(params *V3CreateAtsCodepairParams) (*V3CreateAtsCodepairResponse, error) {
+func (c *Client) V3CreateAtsCodepair(ctx context.Context, params *V3CreateAtsCodepairParams) (*V3CreateAtsCodepairResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/ats/codepair")
 	if err != nil {
 		return nil, err
@@ -1666,7 +1667,7 @@ func (c *Client) V3CreateAtsCodepair(params *V3CreateAtsCodepairParams) (*V3Crea
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1705,7 +1706,7 @@ type V3CreateAtsCodescreenResponse struct {
 	TestLink string `json:"test_link"`
 }
 
-func (c *Client) V3CreateAtsCodescreen(params *V3CreateAtsCodescreenParams) (*V3CreateAtsCodescreenResponse, error) {
+func (c *Client) V3CreateAtsCodescreen(ctx context.Context, params *V3CreateAtsCodescreenParams) (*V3CreateAtsCodescreenResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/ats/codescreen")
 	if err != nil {
 		return nil, err
@@ -1720,7 +1721,7 @@ func (c *Client) V3CreateAtsCodescreen(params *V3CreateAtsCodescreenParams) (*V3
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1763,7 +1764,7 @@ type V3GetAuditLogResponse struct {
 	Total     float32         `json:"total"`
 }
 
-func (c *Client) V3GetAuditLog(params *V3GetAuditLogParams) (*V3GetAuditLogResponse, error) {
+func (c *Client) V3GetAuditLog(ctx context.Context, params *V3GetAuditLogParams) (*V3GetAuditLogResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/audit_log?limit={limit}&offset={offset}&user_id={user_id}")
 	if err != nil {
 		return nil, err
@@ -1776,7 +1777,7 @@ func (c *Client) V3GetAuditLog(params *V3GetAuditLogParams) (*V3GetAuditLogRespo
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1828,7 +1829,7 @@ type V3GetInterviewsResponse struct {
 	Total     float32          `json:"total"`
 }
 
-func (c *Client) V3GetInterviews(params *V3GetInterviewsParams) (*V3GetInterviewsResponse, error) {
+func (c *Client) V3GetInterviews(ctx context.Context, params *V3GetInterviewsParams) (*V3GetInterviewsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/interviews")
 	if err != nil {
 		return nil, err
@@ -1841,7 +1842,7 @@ func (c *Client) V3GetInterviews(params *V3GetInterviewsParams) (*V3GetInterview
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1876,7 +1877,7 @@ type V3CreateInterviewsParams struct {
 }
 type V3CreateInterviewsResponse InterviewShow
 
-func (c *Client) V3CreateInterviews(params *V3CreateInterviewsParams) (*V3CreateInterviewsResponse, error) {
+func (c *Client) V3CreateInterviews(ctx context.Context, params *V3CreateInterviewsParams) (*V3CreateInterviewsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/interviews")
 	if err != nil {
 		return nil, err
@@ -1891,7 +1892,7 @@ func (c *Client) V3CreateInterviews(params *V3CreateInterviewsParams) (*V3Create
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1924,7 +1925,7 @@ type V3DeleteInterviewByInterviewIdParams struct {
 }
 type V3DeleteInterviewByInterviewIdResponse struct{}
 
-func (c *Client) V3DeleteInterviewByInterviewId(params *V3DeleteInterviewByInterviewIdParams) (*V3DeleteInterviewByInterviewIdResponse, error) {
+func (c *Client) V3DeleteInterviewByInterviewId(ctx context.Context, params *V3DeleteInterviewByInterviewIdParams) (*V3DeleteInterviewByInterviewIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/interviews/{interview_id}")
 	if err != nil {
 		return nil, err
@@ -1936,7 +1937,7 @@ func (c *Client) V3DeleteInterviewByInterviewId(params *V3DeleteInterviewByInter
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -1969,7 +1970,7 @@ type V3GetInterviewByInterviewIdParams struct {
 }
 type V3GetInterviewByInterviewIdResponse InterviewShow
 
-func (c *Client) V3GetInterviewByInterviewId(params *V3GetInterviewByInterviewIdParams) (*V3GetInterviewByInterviewIdResponse, error) {
+func (c *Client) V3GetInterviewByInterviewId(ctx context.Context, params *V3GetInterviewByInterviewIdParams) (*V3GetInterviewByInterviewIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/interviews/{interview_id}")
 	if err != nil {
 		return nil, err
@@ -1981,7 +1982,7 @@ func (c *Client) V3GetInterviewByInterviewId(params *V3GetInterviewByInterviewId
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2017,7 +2018,7 @@ type V3PutInterviewByInterviewIdParams struct {
 }
 type V3PutInterviewByInterviewIdResponse InterviewShow
 
-func (c *Client) V3PutInterviewByInterviewId(params *V3PutInterviewByInterviewIdParams) (*V3PutInterviewByInterviewIdResponse, error) {
+func (c *Client) V3PutInterviewByInterviewId(ctx context.Context, params *V3PutInterviewByInterviewIdParams) (*V3PutInterviewByInterviewIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/interviews/{interview_id}")
 	if err != nil {
 		return nil, err
@@ -2033,7 +2034,7 @@ func (c *Client) V3PutInterviewByInterviewId(params *V3PutInterviewByInterviewId
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2082,7 +2083,7 @@ type V3GetQuestionsResponse struct {
 	Total     float32         `json:"total"`
 }
 
-func (c *Client) V3GetQuestions(params *V3GetQuestionsParams) (*V3GetQuestionsResponse, error) {
+func (c *Client) V3GetQuestions(ctx context.Context, params *V3GetQuestionsParams) (*V3GetQuestionsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/questions")
 	if err != nil {
 		return nil, err
@@ -2093,7 +2094,7 @@ func (c *Client) V3GetQuestions(params *V3GetQuestionsParams) (*V3GetQuestionsRe
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2128,7 +2129,7 @@ type V3CreateQuestionsParams struct {
 }
 type V3CreateQuestionsResponse QuestionShow
 
-func (c *Client) V3CreateQuestions(params *V3CreateQuestionsParams) (*V3CreateQuestionsResponse, error) {
+func (c *Client) V3CreateQuestions(ctx context.Context, params *V3CreateQuestionsParams) (*V3CreateQuestionsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/questions")
 	if err != nil {
 		return nil, err
@@ -2143,7 +2144,7 @@ func (c *Client) V3CreateQuestions(params *V3CreateQuestionsParams) (*V3CreateQu
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2176,7 +2177,7 @@ type V3GetQuestionByQuestionIdParams struct {
 }
 type V3GetQuestionByQuestionIdResponse QuestionShow
 
-func (c *Client) V3GetQuestionByQuestionId(params *V3GetQuestionByQuestionIdParams) (*V3GetQuestionByQuestionIdResponse, error) {
+func (c *Client) V3GetQuestionByQuestionId(ctx context.Context, params *V3GetQuestionByQuestionIdParams) (*V3GetQuestionByQuestionIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/questions/{question_id}")
 	if err != nil {
 		return nil, err
@@ -2188,7 +2189,7 @@ func (c *Client) V3GetQuestionByQuestionId(params *V3GetQuestionByQuestionIdPara
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2224,7 +2225,7 @@ type V3PutQuestionByQuestionIdParams struct {
 }
 type V3PutQuestionByQuestionIdResponse QuestionShow
 
-func (c *Client) V3PutQuestionByQuestionId(params *V3PutQuestionByQuestionIdParams) (*V3PutQuestionByQuestionIdResponse, error) {
+func (c *Client) V3PutQuestionByQuestionId(ctx context.Context, params *V3PutQuestionByQuestionIdParams) (*V3PutQuestionByQuestionIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/questions/{question_id}")
 	if err != nil {
 		return nil, err
@@ -2240,7 +2241,7 @@ func (c *Client) V3PutQuestionByQuestionId(params *V3PutQuestionByQuestionIdPara
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2294,7 +2295,7 @@ type V3PutQuestionByQuestionIdGenerateResponse struct {
 	TemplateType        string `json:"template_type"`
 }
 
-func (c *Client) V3PutQuestionByQuestionIdGenerate(params *V3PutQuestionByQuestionIdGenerateParams) (*V3PutQuestionByQuestionIdGenerateResponse, error) {
+func (c *Client) V3PutQuestionByQuestionIdGenerate(ctx context.Context, params *V3PutQuestionByQuestionIdGenerateParams) (*V3PutQuestionByQuestionIdGenerateResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/questions/{question_id}/generate")
 	if err != nil {
 		return nil, err
@@ -2310,7 +2311,7 @@ func (c *Client) V3PutQuestionByQuestionIdGenerate(params *V3PutQuestionByQuesti
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2355,7 +2356,7 @@ type V3CreateQuestionByQuestionIdTestcasesParams struct {
 }
 type V3CreateQuestionByQuestionIdTestcasesResponse struct{}
 
-func (c *Client) V3CreateQuestionByQuestionIdTestcases(params *V3CreateQuestionByQuestionIdTestcasesParams) (*V3CreateQuestionByQuestionIdTestcasesResponse, error) {
+func (c *Client) V3CreateQuestionByQuestionIdTestcases(ctx context.Context, params *V3CreateQuestionByQuestionIdTestcasesParams) (*V3CreateQuestionByQuestionIdTestcasesResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/questions/{question_id}/testcases")
 	if err != nil {
 		return nil, err
@@ -2371,7 +2372,7 @@ func (c *Client) V3CreateQuestionByQuestionIdTestcases(params *V3CreateQuestionB
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2406,7 +2407,7 @@ type V3CreateTeamsParams struct {
 }
 type V3CreateTeamsResponse TeamShow
 
-func (c *Client) V3CreateTeams(params *V3CreateTeamsParams) (*V3CreateTeamsResponse, error) {
+func (c *Client) V3CreateTeams(ctx context.Context, params *V3CreateTeamsParams) (*V3CreateTeamsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams")
 	if err != nil {
 		return nil, err
@@ -2421,7 +2422,7 @@ func (c *Client) V3CreateTeams(params *V3CreateTeamsParams) (*V3CreateTeamsRespo
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2454,7 +2455,7 @@ type V3DeleteTeamByIdParams struct {
 }
 type V3DeleteTeamByIdResponse struct{}
 
-func (c *Client) V3DeleteTeamById(params *V3DeleteTeamByIdParams) (*V3DeleteTeamByIdResponse, error) {
+func (c *Client) V3DeleteTeamById(ctx context.Context, params *V3DeleteTeamByIdParams) (*V3DeleteTeamByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{id}")
 	if err != nil {
 		return nil, err
@@ -2466,7 +2467,7 @@ func (c *Client) V3DeleteTeamById(params *V3DeleteTeamByIdParams) (*V3DeleteTeam
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2499,7 +2500,7 @@ type V3GetTeamByIdParams struct {
 }
 type V3GetTeamByIdResponse TeamShow
 
-func (c *Client) V3GetTeamById(params *V3GetTeamByIdParams) (*V3GetTeamByIdResponse, error) {
+func (c *Client) V3GetTeamById(ctx context.Context, params *V3GetTeamByIdParams) (*V3GetTeamByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{id}")
 	if err != nil {
 		return nil, err
@@ -2511,7 +2512,7 @@ func (c *Client) V3GetTeamById(params *V3GetTeamByIdParams) (*V3GetTeamByIdRespo
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2547,7 +2548,7 @@ type V3PutTeamByIdParams struct {
 }
 type V3PutTeamByIdResponse struct{}
 
-func (c *Client) V3PutTeamById(params *V3PutTeamByIdParams) (*V3PutTeamByIdResponse, error) {
+func (c *Client) V3PutTeamById(ctx context.Context, params *V3PutTeamByIdParams) (*V3PutTeamByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{id}")
 	if err != nil {
 		return nil, err
@@ -2563,7 +2564,7 @@ func (c *Client) V3PutTeamById(params *V3PutTeamByIdParams) (*V3PutTeamByIdRespo
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2597,7 +2598,7 @@ type V3DeleteTeamByTeamIdUserByUserIdParams struct {
 }
 type V3DeleteTeamByTeamIdUserByUserIdResponse struct{}
 
-func (c *Client) V3DeleteTeamByTeamIdUserByUserId(params *V3DeleteTeamByTeamIdUserByUserIdParams) (*V3DeleteTeamByTeamIdUserByUserIdResponse, error) {
+func (c *Client) V3DeleteTeamByTeamIdUserByUserId(ctx context.Context, params *V3DeleteTeamByTeamIdUserByUserIdParams) (*V3DeleteTeamByTeamIdUserByUserIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{team_id}/users/{user_id}")
 	if err != nil {
 		return nil, err
@@ -2610,7 +2611,7 @@ func (c *Client) V3DeleteTeamByTeamIdUserByUserId(params *V3DeleteTeamByTeamIdUs
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2644,7 +2645,7 @@ type V3GetTeamByTeamIdUserByUserIdParams struct {
 }
 type V3GetTeamByTeamIdUserByUserIdResponse UserTeamMembershipShow
 
-func (c *Client) V3GetTeamByTeamIdUserByUserId(params *V3GetTeamByTeamIdUserByUserIdParams) (*V3GetTeamByTeamIdUserByUserIdResponse, error) {
+func (c *Client) V3GetTeamByTeamIdUserByUserId(ctx context.Context, params *V3GetTeamByTeamIdUserByUserIdParams) (*V3GetTeamByTeamIdUserByUserIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{team_id}/users/{user_id}")
 	if err != nil {
 		return nil, err
@@ -2657,7 +2658,7 @@ func (c *Client) V3GetTeamByTeamIdUserByUserId(params *V3GetTeamByTeamIdUserByUs
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2692,7 +2693,7 @@ type V3CreateTeamByTeamIdUserByUserIdParams struct {
 }
 type V3CreateTeamByTeamIdUserByUserIdResponse struct{}
 
-func (c *Client) V3CreateTeamByTeamIdUserByUserId(params *V3CreateTeamByTeamIdUserByUserIdParams) (*V3CreateTeamByTeamIdUserByUserIdResponse, error) {
+func (c *Client) V3CreateTeamByTeamIdUserByUserId(ctx context.Context, params *V3CreateTeamByTeamIdUserByUserIdParams) (*V3CreateTeamByTeamIdUserByUserIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{team_id}/users/{user_id}?license={license}")
 	if err != nil {
 		return nil, err
@@ -2710,7 +2711,7 @@ func (c *Client) V3CreateTeamByTeamIdUserByUserId(params *V3CreateTeamByTeamIdUs
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2754,7 +2755,7 @@ type V3GetTeamByTeamIdUsersResponse struct {
 	Total     float32                   `json:"total"`
 }
 
-func (c *Client) V3GetTeamByTeamIdUsers(params *V3GetTeamByTeamIdUsersParams) (*V3GetTeamByTeamIdUsersResponse, error) {
+func (c *Client) V3GetTeamByTeamIdUsers(ctx context.Context, params *V3GetTeamByTeamIdUsersParams) (*V3GetTeamByTeamIdUsersResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams/{team_id}/users?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -2768,7 +2769,7 @@ func (c *Client) V3GetTeamByTeamIdUsers(params *V3GetTeamByTeamIdUsersParams) (*
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2811,7 +2812,7 @@ type V3GetTeamsResponse struct {
 	Total     float32     `json:"total"`
 }
 
-func (c *Client) V3GetTeams(params *V3GetTeamsParams) (*V3GetTeamsResponse, error) {
+func (c *Client) V3GetTeams(ctx context.Context, params *V3GetTeamsParams) (*V3GetTeamsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/teams?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -2824,7 +2825,7 @@ func (c *Client) V3GetTeams(params *V3GetTeamsParams) (*V3GetTeamsResponse, erro
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2866,7 +2867,7 @@ type V3GetTemplatesResponse struct {
 	Total     float32         `json:"total"`
 }
 
-func (c *Client) V3GetTemplates(params *V3GetTemplatesParams) (*V3GetTemplatesResponse, error) {
+func (c *Client) V3GetTemplates(ctx context.Context, params *V3GetTemplatesParams) (*V3GetTemplatesResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/templates")
 	if err != nil {
 		return nil, err
@@ -2877,7 +2878,7 @@ func (c *Client) V3GetTemplates(params *V3GetTemplatesParams) (*V3GetTemplatesRe
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2910,7 +2911,7 @@ type V3GetTemplateByTemplateIdParams struct {
 }
 type V3GetTemplateByTemplateIdResponse TemplateShow
 
-func (c *Client) V3GetTemplateByTemplateId(params *V3GetTemplateByTemplateIdParams) (*V3GetTemplateByTemplateIdResponse, error) {
+func (c *Client) V3GetTemplateByTemplateId(ctx context.Context, params *V3GetTemplateByTemplateIdParams) (*V3GetTemplateByTemplateIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/templates/{template_id}")
 	if err != nil {
 		return nil, err
@@ -2922,7 +2923,7 @@ func (c *Client) V3GetTemplateByTemplateId(params *V3GetTemplateByTemplateIdPara
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -2957,7 +2958,7 @@ type V3CreateTestsParams struct {
 }
 type V3CreateTestsResponse TestsShow
 
-func (c *Client) V3CreateTests(params *V3CreateTestsParams) (*V3CreateTestsResponse, error) {
+func (c *Client) V3CreateTests(ctx context.Context, params *V3CreateTestsParams) (*V3CreateTestsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests")
 	if err != nil {
 		return nil, err
@@ -2972,7 +2973,7 @@ func (c *Client) V3CreateTests(params *V3CreateTestsParams) (*V3CreateTestsRespo
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3005,7 +3006,7 @@ type V3DeleteTestByIdParams struct {
 }
 type V3DeleteTestByIdResponse struct{}
 
-func (c *Client) V3DeleteTestById(params *V3DeleteTestByIdParams) (*V3DeleteTestByIdResponse, error) {
+func (c *Client) V3DeleteTestById(ctx context.Context, params *V3DeleteTestByIdParams) (*V3DeleteTestByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{id}")
 	if err != nil {
 		return nil, err
@@ -3017,7 +3018,7 @@ func (c *Client) V3DeleteTestById(params *V3DeleteTestByIdParams) (*V3DeleteTest
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3050,7 +3051,7 @@ type V3GetTestByIdParams struct {
 }
 type V3GetTestByIdResponse TestsShow
 
-func (c *Client) V3GetTestById(params *V3GetTestByIdParams) (*V3GetTestByIdResponse, error) {
+func (c *Client) V3GetTestById(ctx context.Context, params *V3GetTestByIdParams) (*V3GetTestByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{id}")
 	if err != nil {
 		return nil, err
@@ -3062,7 +3063,7 @@ func (c *Client) V3GetTestById(params *V3GetTestByIdParams) (*V3GetTestByIdRespo
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3098,7 +3099,7 @@ type V3PutTestByIdParams struct {
 }
 type V3PutTestByIdResponse struct{}
 
-func (c *Client) V3PutTestById(params *V3PutTestByIdParams) (*V3PutTestByIdResponse, error) {
+func (c *Client) V3PutTestById(ctx context.Context, params *V3PutTestByIdParams) (*V3PutTestByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{id}")
 	if err != nil {
 		return nil, err
@@ -3114,7 +3115,7 @@ func (c *Client) V3PutTestById(params *V3PutTestByIdParams) (*V3PutTestByIdRespo
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3147,7 +3148,7 @@ type V3CreateTestByIdArchiveParams struct {
 }
 type V3CreateTestByIdArchiveResponse struct{}
 
-func (c *Client) V3CreateTestByIdArchive(params *V3CreateTestByIdArchiveParams) (*V3CreateTestByIdArchiveResponse, error) {
+func (c *Client) V3CreateTestByIdArchive(ctx context.Context, params *V3CreateTestByIdArchiveParams) (*V3CreateTestByIdArchiveResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{id}/archive")
 	if err != nil {
 		return nil, err
@@ -3163,7 +3164,7 @@ func (c *Client) V3CreateTestByIdArchive(params *V3CreateTestByIdArchiveParams) 
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3207,7 +3208,7 @@ type V3GetTestByIdInvitersResponse struct {
 	Total     float32         `json:"total"`
 }
 
-func (c *Client) V3GetTestByIdInviters(params *V3GetTestByIdInvitersParams) (*V3GetTestByIdInvitersResponse, error) {
+func (c *Client) V3GetTestByIdInviters(ctx context.Context, params *V3GetTestByIdInvitersParams) (*V3GetTestByIdInvitersResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{id}/inviters")
 	if err != nil {
 		return nil, err
@@ -3221,7 +3222,7 @@ func (c *Client) V3GetTestByIdInviters(params *V3GetTestByIdInvitersParams) (*V3
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3261,7 +3262,7 @@ type V3CreateTestByTestIdCandidatesResponse struct {
 	TestLink string `json:"test_link"`
 }
 
-func (c *Client) V3CreateTestByTestIdCandidates(params *V3CreateTestByTestIdCandidatesParams) (*V3CreateTestByTestIdCandidatesResponse, error) {
+func (c *Client) V3CreateTestByTestIdCandidates(ctx context.Context, params *V3CreateTestByTestIdCandidatesParams) (*V3CreateTestByTestIdCandidatesResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates")
 	if err != nil {
 		return nil, err
@@ -3277,7 +3278,7 @@ func (c *Client) V3CreateTestByTestIdCandidates(params *V3CreateTestByTestIdCand
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3322,7 +3323,7 @@ type V3GetTestByTestIdCandidatesSearchResponse struct {
 	Total     float32              `json:"total"`
 }
 
-func (c *Client) V3GetTestByTestIdCandidatesSearch(params *V3GetTestByTestIdCandidatesSearchParams) (*V3GetTestByTestIdCandidatesSearchResponse, error) {
+func (c *Client) V3GetTestByTestIdCandidatesSearch(ctx context.Context, params *V3GetTestByTestIdCandidatesSearchParams) (*V3GetTestByTestIdCandidatesSearchResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates/search?search={search}&limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -3337,7 +3338,7 @@ func (c *Client) V3GetTestByTestIdCandidatesSearch(params *V3GetTestByTestIdCand
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3374,7 +3375,7 @@ type V3PutTestByTestIdCandidateByCandidateIdParams struct {
 }
 type V3PutTestByTestIdCandidateByCandidateIdResponse TestCandidateShow
 
-func (c *Client) V3PutTestByTestIdCandidateByCandidateId(params *V3PutTestByTestIdCandidateByCandidateIdParams) (*V3PutTestByTestIdCandidateByCandidateIdResponse, error) {
+func (c *Client) V3PutTestByTestIdCandidateByCandidateId(ctx context.Context, params *V3PutTestByTestIdCandidateByCandidateIdParams) (*V3PutTestByTestIdCandidateByCandidateIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates/{candidate_id}")
 	if err != nil {
 		return nil, err
@@ -3391,7 +3392,7 @@ func (c *Client) V3PutTestByTestIdCandidateByCandidateId(params *V3PutTestByTest
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3425,7 +3426,7 @@ type V3DeleteTestByTestIdCandidateByCandidateIdInviteParams struct {
 }
 type V3DeleteTestByTestIdCandidateByCandidateIdInviteResponse struct{}
 
-func (c *Client) V3DeleteTestByTestIdCandidateByCandidateIdInvite(params *V3DeleteTestByTestIdCandidateByCandidateIdInviteParams) (*V3DeleteTestByTestIdCandidateByCandidateIdInviteResponse, error) {
+func (c *Client) V3DeleteTestByTestIdCandidateByCandidateIdInvite(ctx context.Context, params *V3DeleteTestByTestIdCandidateByCandidateIdInviteParams) (*V3DeleteTestByTestIdCandidateByCandidateIdInviteResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates/{candidate_id}/invite")
 	if err != nil {
 		return nil, err
@@ -3438,7 +3439,7 @@ func (c *Client) V3DeleteTestByTestIdCandidateByCandidateIdInvite(params *V3Dele
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3472,7 +3473,7 @@ type V3GetTestByTestIdCandidateByCandidateIdPdfParams struct {
 }
 type V3GetTestByTestIdCandidateByCandidateIdPdfResponse struct{}
 
-func (c *Client) V3GetTestByTestIdCandidateByCandidateIdPdf(params *V3GetTestByTestIdCandidateByCandidateIdPdfParams) (*V3GetTestByTestIdCandidateByCandidateIdPdfResponse, error) {
+func (c *Client) V3GetTestByTestIdCandidateByCandidateIdPdf(ctx context.Context, params *V3GetTestByTestIdCandidateByCandidateIdPdfParams) (*V3GetTestByTestIdCandidateByCandidateIdPdfResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates/{candidate_id}/pdf?format=url")
 	if err != nil {
 		return nil, err
@@ -3485,7 +3486,7 @@ func (c *Client) V3GetTestByTestIdCandidateByCandidateIdPdf(params *V3GetTestByT
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3519,7 +3520,7 @@ type V3DeleteTestByTestIdCandidateByCandidateIdReportParams struct {
 }
 type V3DeleteTestByTestIdCandidateByCandidateIdReportResponse struct{}
 
-func (c *Client) V3DeleteTestByTestIdCandidateByCandidateIdReport(params *V3DeleteTestByTestIdCandidateByCandidateIdReportParams) (*V3DeleteTestByTestIdCandidateByCandidateIdReportResponse, error) {
+func (c *Client) V3DeleteTestByTestIdCandidateByCandidateIdReport(ctx context.Context, params *V3DeleteTestByTestIdCandidateByCandidateIdReportParams) (*V3DeleteTestByTestIdCandidateByCandidateIdReportResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates/{candidate_id}/report")
 	if err != nil {
 		return nil, err
@@ -3532,7 +3533,7 @@ func (c *Client) V3DeleteTestByTestIdCandidateByCandidateIdReport(params *V3Dele
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3567,7 +3568,7 @@ type V3GetTestByTestIdCandidateByCandidateIdParams struct {
 }
 type V3GetTestByTestIdCandidateByCandidateIdResponse TestCandidateShow
 
-func (c *Client) V3GetTestByTestIdCandidateByCandidateId(params *V3GetTestByTestIdCandidateByCandidateIdParams) (*V3GetTestByTestIdCandidateByCandidateIdResponse, error) {
+func (c *Client) V3GetTestByTestIdCandidateByCandidateId(ctx context.Context, params *V3GetTestByTestIdCandidateByCandidateIdParams) (*V3GetTestByTestIdCandidateByCandidateIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates/{candidate_id}?additional_fields={additional_fields}")
 	if err != nil {
 		return nil, err
@@ -3581,7 +3582,7 @@ func (c *Client) V3GetTestByTestIdCandidateByCandidateId(params *V3GetTestByTest
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3625,7 +3626,7 @@ type V3GetTestByTestIdCandidatesResponse struct {
 	Total     float32              `json:"total"`
 }
 
-func (c *Client) V3GetTestByTestIdCandidates(params *V3GetTestByTestIdCandidatesParams) (*V3GetTestByTestIdCandidatesResponse, error) {
+func (c *Client) V3GetTestByTestIdCandidates(ctx context.Context, params *V3GetTestByTestIdCandidatesParams) (*V3GetTestByTestIdCandidatesResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests/{test_id}/candidates?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -3639,7 +3640,7 @@ func (c *Client) V3GetTestByTestIdCandidates(params *V3GetTestByTestIdCandidates
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3682,7 +3683,7 @@ type V3GetTestsResponse struct {
 	Total     float32      `json:"total"`
 }
 
-func (c *Client) V3GetTests(params *V3GetTestsParams) (*V3GetTestsResponse, error) {
+func (c *Client) V3GetTests(ctx context.Context, params *V3GetTestsParams) (*V3GetTestsResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/tests?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -3695,7 +3696,7 @@ func (c *Client) V3GetTests(params *V3GetTestsParams) (*V3GetTestsResponse, erro
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3730,7 +3731,7 @@ type V3CreateUsersParams struct {
 }
 type V3CreateUsersResponse UserShow
 
-func (c *Client) V3CreateUsers(params *V3CreateUsersParams) (*V3CreateUsersResponse, error) {
+func (c *Client) V3CreateUsers(ctx context.Context, params *V3CreateUsersParams) (*V3CreateUsersResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/users")
 	if err != nil {
 		return nil, err
@@ -3745,7 +3746,7 @@ func (c *Client) V3CreateUsers(params *V3CreateUsersParams) (*V3CreateUsersRespo
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("POST", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "POST", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3789,7 +3790,7 @@ type V3GetUsersSearchResponse struct {
 	Total     float32     `json:"total"`
 }
 
-func (c *Client) V3GetUsersSearch(params *V3GetUsersSearchParams) (*V3GetUsersSearchResponse, error) {
+func (c *Client) V3GetUsersSearch(ctx context.Context, params *V3GetUsersSearchParams) (*V3GetUsersSearchResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/users/search?search={search_string}&limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -3803,7 +3804,7 @@ func (c *Client) V3GetUsersSearch(params *V3GetUsersSearchParams) (*V3GetUsersSe
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3836,7 +3837,7 @@ type V3DeleteUserByIdParams struct {
 }
 type V3DeleteUserByIdResponse struct{}
 
-func (c *Client) V3DeleteUserById(params *V3DeleteUserByIdParams) (*V3DeleteUserByIdResponse, error) {
+func (c *Client) V3DeleteUserById(ctx context.Context, params *V3DeleteUserByIdParams) (*V3DeleteUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/users/{id}")
 	if err != nil {
 		return nil, err
@@ -3848,7 +3849,7 @@ func (c *Client) V3DeleteUserById(params *V3DeleteUserByIdParams) (*V3DeleteUser
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("DELETE", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "DELETE", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3881,7 +3882,7 @@ type V3GetUserByIdParams struct {
 }
 type V3GetUserByIdResponse UserShow
 
-func (c *Client) V3GetUserById(params *V3GetUserByIdParams) (*V3GetUserByIdResponse, error) {
+func (c *Client) V3GetUserById(ctx context.Context, params *V3GetUserByIdParams) (*V3GetUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/users/{id}")
 	if err != nil {
 		return nil, err
@@ -3893,7 +3894,7 @@ func (c *Client) V3GetUserById(params *V3GetUserByIdParams) (*V3GetUserByIdRespo
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3929,7 +3930,7 @@ type V3PutUserByIdParams struct {
 }
 type V3PutUserByIdResponse struct{}
 
-func (c *Client) V3PutUserById(params *V3PutUserByIdParams) (*V3PutUserByIdResponse, error) {
+func (c *Client) V3PutUserById(ctx context.Context, params *V3PutUserByIdParams) (*V3PutUserByIdResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/users/{id}")
 	if err != nil {
 		return nil, err
@@ -3945,7 +3946,7 @@ func (c *Client) V3PutUserById(params *V3PutUserByIdParams) (*V3PutUserByIdRespo
 	}
 	buffer := bytes.NewBuffer(requestBody)
 
-	req, err := http.NewRequest("PUT", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "PUT", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
@@ -3988,7 +3989,7 @@ type V3GetUsersResponse struct {
 	Total     float32     `json:"total"`
 }
 
-func (c *Client) V3GetUsers(params *V3GetUsersParams) (*V3GetUsersResponse, error) {
+func (c *Client) V3GetUsers(ctx context.Context, params *V3GetUsersParams) (*V3GetUsersResponse, error) {
 	u, err := url.Parse("https://www.hackerrank.com/x/api/v3/users?limit={limit}&offset={offset}")
 	if err != nil {
 		return nil, err
@@ -4001,7 +4002,7 @@ func (c *Client) V3GetUsers(params *V3GetUsersParams) (*V3GetUsersResponse, erro
 	u.RawQuery = q.Encode()
 	buffer := bytes.NewBuffer([]byte{})
 
-	req, err := http.NewRequest("GET", u.String(), buffer)
+	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), buffer)
 	if err != nil {
 		return nil, err
 	}
