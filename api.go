@@ -650,6 +650,7 @@ type TestCandidateIndex struct {
 	AddedTime              float32                `json:"added_time"`
 	AtsState               float32                `json:"ats_state"`
 	AttemptEndtime         string                 `json:"attempt_endtime"`
+	AttemptId              string                 `json:"attempt_id"`
 	AttemptStarttime       string                 `json:"attempt_starttime"`
 	AuthenticatedReportUrl string                 `json:"authenticated_report_url"`
 	CandidateDetails       []CandidateDetail      `json:"candidate_details"`

@@ -43,6 +43,15 @@ func LoadHackerRankApiDoc() (*HackerRankApiDoc, error) {
 		return nil, err
 	}
 
+	// Patches
+	for name, definition := range doc.Definitions {
+		if name == "TestCandidateIndex" {
+			definition.Properties["attempt_id"] = &DefinitionProperty{
+				Type: "string",
+			}
+		}
+	}
+
 	return &doc, nil
 }
 
